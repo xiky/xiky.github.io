@@ -1,0 +1,30 @@
+---
+layout:     post
+title:      "Copy"
+subtitle:   " - "
+date:       2019-11-02 20:00:00
+author:     "Yxi"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+<!-- tags:
+    - 开发 -->
+---
+
+> “Yeah It's on. ”
+
+
+## 前言
+学无止境
+
+<p id = "build"></p>
+---
+
+## Copy
+目标是为了创建副本，与原有数据互不影响
+
+1. 不可变copy，产生不可变副本
+2. 可变copy，产生可变副本
+
+## 深拷贝 & 浅拷贝
+1. 深拷贝，内容拷贝，产生新对象
+2. 浅拷贝，指针拷贝，引用计数增加

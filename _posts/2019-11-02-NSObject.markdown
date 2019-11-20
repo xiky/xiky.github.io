@@ -1,0 +1,54 @@
+---
+layout:     post
+title:      "NSObject"
+subtitle:   " - "
+date:       2019-11-02 20:00:00
+author:     "Yxi"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+<!-- tags:
+    - 开发 -->
+---
+
+> “Yeah It's on. ”
+
+
+## 前言
+学无止境
+
+<p id = "build"></p>
+---
+
+## NSObject 本质
+
+```
+struct NSObject_IMPL {
+	Class isa; // isa地址，就是这个结构体的地址，就是NSObject的地址
+}
+```
+
+- 成员变量的值，放在instance对象里面
+```oc
+{
+	_age, // 如：age = 10，具体某个对象的值是多少，存放在对象里
+}
+NSObject *obj1 = [[NSObject alloc] init];
+```
+
+- 成员变量的属性，协议，对象方法，放在class对象里
+```
+Class cls1 = [obj1 class];
+Class cls2 = [NSObject class];
+Class cls3 = object_getClass(obj1);
+```
+
+- 类方法，放在meta-class对象里，每个类在内存中有且只有一个meta-class对象
+```
+{
+	isa指针
+	superclass指针
+	类的类方法信息（class method）
+	...
+} 
+Class metaClass = object_getClass(cls123);
+```

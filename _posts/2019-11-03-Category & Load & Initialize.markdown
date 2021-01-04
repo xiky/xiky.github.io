@@ -45,19 +45,23 @@ struct category_t {
 ```
 
 每一个分类，都是一个`struct category_t`，会在runtime里，遍历每一个分类，添加到类信息中的rw_t表中，拿到这些表
-```
+```c
     method_list_t **mlists = (method_list_t **)
         malloc(cats->count * sizeof(*mlists));
+        
     property_list_t **proplists = (property_list_t **)
         malloc(cats->count * sizeof(*proplists));
+        
     protocol_list_t **protolists = (protocol_list_t **)
         malloc(cats->count * sizeof(*protolists));
 ```
 
-将所有分类信息，附加到类信息，将原方法` memmove(array()->lists + addedCount, array()->lists, 
-                    oldCount * sizeof(array()->lists[0]));`移动到数组中的最后
-                将分类中的方法`memcpy(array()->lists, addedLists, 
-                   addedCount * sizeof(array()->lists[0]));`复制到原方法位置
+将所有分类信息，附加到类信息，将原方法移动到数组中的最后
+` memmove(array()->lists + addedCount, array()->lists, oldCount * sizeof(array()->lists[0]));`
+
+将分类中的方法复制到原方法位置
+`memcpy(array()->lists, addedLists, addedCount * sizeof(array()->lists[0]));`
+
 所以分类方法会覆盖原方法，多个分类方法的调用(消息机制)，根据编译顺序确定
 
 ## Category & Extention
@@ -68,7 +72,6 @@ Category，在运行时，动态添加
 - 为什么Load方法没有覆盖
     - 因为分类的方法是消息发机，根据isa查找到具体的类，再去遍历方法列表，找到具体的方法进行调用
     - Load方法是内存中，直接通过函数指针找到函数地址值，直接调用
-
 
 ## Load
 会在runtime加载类、分类时调用
@@ -140,7 +143,6 @@ void callInitialize(Class cls)
     asm("");
 }
 ```
-
 
 ## Load & Initialize 区别
 1. 调用方式

@@ -1,20 +1,16 @@
 # ---
 layout:     post
-title:      "Autoreleasepool"
+title:      "2021"
 subtitle:   " - "
 date:       2020-12-28 19:41:00
 author:     "Yxi"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
 <!-- tags:
-    - 开发 -->
+    - 生活 -->
 ---
 
-> “Yeah It's on. ”
 
+## 时隔一年 继续前行
 
-# 时隔一年 继续前行
-
-
-## 前言
-疫情当下
+疫情反反复复，感情断断续续，愿新的一年，一切安好

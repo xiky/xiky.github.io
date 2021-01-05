@@ -1,0 +1,15 @@
+---
+layout:     post
+title:      "3500"
+subtitle:   " - "
+date:       2021-01-04 16:41:00
+author:     "Yxi"
+header-img: "img/post-bg-unix-linux.jpg"
+catalog: true
+<!-- tags:
+    - 理财 -->
+---
+
+## 大盘终于过3500
+
+A股开年大红，终于拿下3500，买的基金收益也不错，持有的军工、新能源，今天都涨6、7个点，持续定投

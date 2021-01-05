@@ -1,0 +1,68 @@
+---
+layout:     post
+title:      "如何在 Swift 中一行代码解决数组转字典的问题"
+subtitle:   " - "
+date:       2021-01-05 17:08:00
+author:     "Yxi"
+header-img: "img/post-bg-2015.jpg"
+catalog: true
+<!-- tags:
+    - 开发 -->
+---
+
+## 前言
+
+### 偷师于大佬
+[如何在 Swift 中一行代码解决数组转字典的问题](https://blog.yuusann.com/posts/article/19004)
+
+把Model数组转字典。
+
+```Swift
+struct Data {
+    var name: String
+}
+
+// mock 数据
+var dataList = Array(0..<10).map { Data.init(name: "data \($0)") }
+```
+将Array<Data>以它的`name`为`key`，它本身作为`value`，放到一个数组里。
+
+常规做法1：
+```Swift
+var dataList = Array(0..<10).map { 
+    Data.init(name: "data \($0)") 
+}
+```
+
+常规做法2：
+```Swift
+var dataMap = Dictionary<String, Data>()
+
+for data in dataList {
+    dataMap[data.name] = data
+}
+```
+
+一句话代码：
+```Swift
+var dataMap = Dictionary.init(dataList.map { ($0.name, $0) }) { $1 }
+
+```
+
+解析：
+```Swift
+let dataPairList = dataList.map { ($0.name, $0) }
+dataMap = Dictionary.init(dataPairList, uniquingKeysWith: { (old, new) in
+    new
+})
+```
+- 第一行里，把 key 和 value 拆成了键值对（元组），结果就是下面构造方法的第一个参数。
+- 第二行里，构造方法的第二个参数是一个闭包，用来决定当键重复时，用哪个当值。在例子里直接使用新的 model 覆盖旧的。然后直接构造字典。
+
+Dictionary 的这个构造方法的签名是：
+
+```Swift
+public init<S>(_ keysAndValues: S, uniquingKeysWith combine: ([Key : Value].Value, [Key : Value].Value) throws -> [Key : Value].Value) rethrows where S : Sequence, S.Element == (Key, Value)
+```
+
+这个方法由 Swift 4 引入。

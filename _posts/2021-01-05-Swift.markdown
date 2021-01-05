@@ -4,13 +4,17 @@ title:      "如何在 Swift 中一行代码解决数组转字典的问题"
 subtitle:   " - "
 date:       2021-01-05 17:08:00
 author:     "Yxi"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-universe.jpg"
 catalog: true
 <!-- tags:
     - 开发 -->
 ---
 
 ## 前言
+持续学习
+
+<p id = "build"></p>
+---
 
 ### 偷师于大佬
 [如何在 Swift 中一行代码解决数组转字典的问题](https://blog.yuusann.com/posts/article/19004)
@@ -46,7 +50,6 @@ for data in dataList {
 一句话代码：
 ```Swift
 var dataMap = Dictionary.init(dataList.map { ($0.name, $0) }) { $1 }
-
 ```
 
 解析：
@@ -62,7 +65,37 @@ dataMap = Dictionary.init(dataPairList, uniquingKeysWith: { (old, new) in
 Dictionary 的这个构造方法的签名是：
 
 ```Swift
-public init<S>(_ keysAndValues: S, uniquingKeysWith combine: ([Key : Value].Value, [Key : Value].Value) throws -> [Key : Value].Value) rethrows where S : Sequence, S.Element == (Key, Value)
+    /// Creates a new dictionary from the key-value pairs in the given sequence,
+    /// using a combining closure to determine the value for any duplicate keys.
+    ///
+    /// You use this initializer to create a dictionary when you have a sequence
+    /// of key-value tuples that might have duplicate keys. As the dictionary is
+    /// built, the initializer calls the `combine` closure with the current and
+    /// new values for any duplicate keys. Pass a closure as `combine` that
+    /// returns the value to use in the resulting dictionary: The closure can
+    /// choose between the two values, combine them to produce a new value, or
+    /// even throw an error.
+    ///
+    /// The following example shows how to choose the first and last values for
+    /// any duplicate keys:
+    ///
+    ///     let pairsWithDuplicateKeys = [("a", 1), ("b", 2), ("a", 3), ("b", 4)]
+    ///
+    ///     let firstValues = Dictionary(pairsWithDuplicateKeys,
+    ///                                  uniquingKeysWith: { (first, _) in first })
+    ///     // ["b": 2, "a": 1]
+    ///
+    ///     let lastValues = Dictionary(pairsWithDuplicateKeys,
+    ///                                 uniquingKeysWith: { (_, last) in last })
+    ///     // ["b": 4, "a": 3]
+    ///
+    /// - Parameters:
+    ///   - keysAndValues: A sequence of key-value pairs to use for the new
+    ///     dictionary.
+    ///   - combine: A closure that is called with the values for any duplicate
+    ///     keys that are encountered. The closure returns the desired value for
+    ///     the final dictionary.
+    @inlinable public init<S>(_ keysAndValues: S, uniquingKeysWith combine: (Value, Value) throws -> Value) rethrows where S : Sequence, S.Element == (Key, Value)
 ```
 
 这个方法由 Swift 4 引入。

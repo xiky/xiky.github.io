@@ -33,8 +33,10 @@ var dataList = Array(0..<10).map { Data.init(name: "data \($0)") }
 
 常规做法1：
 ```Swift
-var dataList = Array(0..<10).map { 
-    Data.init(name: "data \($0)") 
+var dataMap = Dictionary<String, Data>()
+
+for i in 0..<dataList.count {
+    dataMap[dataList[i].name] = dataList[i]
 }
 ```
 
@@ -99,3 +101,25 @@ Dictionary 的这个构造方法的签名是：
 ```
 
 这个方法由 Swift 4 引入。
+
+
+### 自己动手，丰衣足食
+看完大佬的代码，还是有点不解，自己再写一遍，加深记忆
+
+解析代码等价于
+```Swift
+let dataPairList = dataList.map { ($0.name, $0) }
+
+// 等价于
+let dataPairList = dataList.map { data -> (String, Data) in
+      // $0：第一个参数，这里是map中的变量
+    let tuple = (data.name, data)
+    return tuple
+}
+
+// 同理，mock数据
+var dataList = Array(0..<10).map { Data.init(name: "data \($0)") }
+var dataList = Array(0..<10).map { index in
+    Data.init(name: "data \(index)")
+}
+```

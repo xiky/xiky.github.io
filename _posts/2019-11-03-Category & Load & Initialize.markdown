@@ -111,7 +111,8 @@ IMP lookUpImpOrForward(Class cls, SEL sel, id inst,
 }
 ```
 
-``` void _class_initialize(Class cls)
+``` 
+void _class_initialize(Class cls)
 {
     // Make sure super is done initializing BEFORE beginning to initialize cls.
     // See note about deadlock above.
